@@ -9,29 +9,29 @@ function AvailableMeal(props) {
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState(null);
 
-	const fetchMealsHandler = async () => {
-		setIsLoading(true);
-		try {
-			const response = await fetch(
-				'https://react-http-48f5c-default-rtdb.firebaseio.com/meals.json'
-			);
-			if (!response.ok) {
-				throw new Error('Something wrongs!');
-			}
-			const data = await response.json();
-			const loadedMeals = [];
-			for (let meal of data) {
-				if (meal !== null) {
-					loadedMeals.push(meal);
-				}
-			}
-			setMeals(loadedMeals);
-		} catch (error) {
-			setError(error.message);
-		}
-		setIsLoading(false);
-	};
 	useEffect(() => {
+		const fetchMealsHandler = async () => {
+			setIsLoading(true);
+			try {
+				const response = await fetch(
+					'https://react-http-48f5c-default-rtdb.firebaseio.com/meals.json'
+				);
+				if (!response.ok) {
+					throw new Error('Something went wrong!');
+				}
+				const data = await response.json();
+				const loadedMeals = [];
+				for (const key in data) {
+					loadedMeals.push({ ...data[key], id: key });
+				}
+
+				setMeals(loadedMeals);
+				setIsLoading(false);
+			} catch (error) {
+				setIsLoading(false);
+				setError(error.message);
+			}
+		};
 		fetchMealsHandler();
 	}, []);
 	const mealsList = meals.map((meal) => {
