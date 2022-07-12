@@ -51,6 +51,7 @@ function Cart(props) {
 		);
 		setIsSubmitting(false);
 		setDidSubmit(true);
+		cartCtx.clearCart();
 	}
 	const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
 	const hasItem = cartCtx.items.length > 0 ? true : false;
