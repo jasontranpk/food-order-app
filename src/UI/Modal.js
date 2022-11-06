@@ -1,6 +1,7 @@
 import classes from './Modal.module.css';
 import ReactDOM from 'react-dom';
 
+//Modal components
 function Backdrop(props) {
 	return <div className={classes.backdrop} onClick={props.onClose}></div>;
 }
